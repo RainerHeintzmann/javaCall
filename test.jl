@@ -1,8 +1,8 @@
 importall Base;
 using Winston;
 using JavaCall;
+JavaCall.init(["-verbose:jni", "-verbose:gc","-Djava.class.path=$(joinpath(Pkg.dir(), "View5D\\AllClasses"));$(joinpath(Pkg.dir(), "loci_tools.jar"))"]);
 
-JavaCall.init(["-verbose:jni", "-verbose:gc","-Djava.class.path=$(joinpath(Pkg.dir(), "View5D\\AllClasses"))"]);
 V = @jimport "View5D";
 
 #loci_tools.jar
@@ -39,12 +39,10 @@ function setindex!{N<:Integer}(a::Img{Array{Float64,N}}, x...)
 end
 #myArray= rand(64,64,3,2,2)  # this is the 5D-Array to display
 
-
-
+importall Base;
+using Winston;
 using JavaCall;
-JavaCall.init(["-verbose:jni", "-verbose:gc","-Djava.class.path=$(joinpath(Pkg.dir(), "loci_tools.jar"))"]);
-jMethod = @jimport "java.lang.reflect.Method";
-jClass = @jimport "java.lang.Class";
+JavaCall.init(["-verbose:jni", "-verbose:gc","-Djava.class.path=$(joinpath(Pkg.dir(), "View5D\\AllClasses"));$(joinpath(Pkg.dir(), "loci_tools.jar"))"]);
 
 jChannelFiller     = @jimport "loci.formats.ChannelFiller";
 jChannelSeparator  = @jimport "loci.formats.ChannelSeparator";
@@ -63,22 +61,5 @@ r=jcall(myChannelSeparator, "setId", (), (JString),"cou");
 r=jcall(myChannelSeparator, "getIndex", (jint), (jint,jint,jint),1,2,3);
 
 
-
-
-
-
-a=JString("Hello World");
-myClass   = jcall(a, "getClass", (jClass), (),);
-myName    = jcall(myClass, "getName", (JString), (),);
-myMethods = jcall(myClass, "getMethods", (Array{jMethod,1}), (),);
-
-s = jcall(myMethods[2], "getName", (JString), (),);
-	
-
-for i= 1:size(myMethods,1)	
-	s = jcall(myMethods[i], "toString", (JString), (),);
-	print(s);
-	print("\n");
-end
 
 

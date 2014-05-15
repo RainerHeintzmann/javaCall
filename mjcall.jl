@@ -1,10 +1,5 @@
-importall Base;
-using JavaCall;
-JavaCall.init(["-verbose:jni", "-verbose:gc","-Djava.class.path=$(joinpath(Pkg.dir(), "View5D\\AllClasses"));$(joinpath(Pkg.dir(), "loci_tools.jar"))"]);
-
 jMethod = @jimport "java.lang.reflect.Method";
 jClass = @jimport "java.lang.Class";
-
 
 
 # Call static methods
