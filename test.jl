@@ -40,9 +40,10 @@ end
 #myArray= rand(64,64,3,2,2)  # this is the 5D-Array to display
 
 importall Base;
-using Winston;
+#using Winston;
 using JavaCall;
 JavaCall.init(["-verbose:jni", "-verbose:gc","-Djava.class.path=$(joinpath(Pkg.dir(), "View5D\\AllClasses"));$(joinpath(Pkg.dir(), "loci_tools.jar"))"]);
+include("mjcall.jl");
 
 jChannelFiller     = @jimport "loci.formats.ChannelFiller";
 jChannelSeparator  = @jimport "loci.formats.ChannelSeparator";

@@ -24,20 +24,12 @@ end
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 function getMethod{T}(typ::Type{JavaObject{T}})
+#print("typ\n\n");
 #function getMethod(typ)
-	myClass   = jcall(typ, "getClass", (jClass), (),);
+	#myClass   = convert(jClass, typ);
+	obj = typ((),);
+	myClass   = jcall(obj, "getClass", (jClass), (),);
 	#myName    = jcall(myClass, "getName", (JString), (),);
 	myMethods = jcall(myClass, "getMethods", (Array{jMethod,1}), (),);
 	for i= 1:size(myMethods,1)	
@@ -49,6 +41,7 @@ function getMethod{T}(typ::Type{JavaObject{T}})
 end
 
 function getMethod(obj::JavaObject)
+#print("obj\n\n");
 #function getMethod(obj)
 	myClass   = jcall(obj, "getClass", (jClass), (),);
 	#myName    = jcall(myClass, "getName", (JString), (),);
