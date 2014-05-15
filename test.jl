@@ -51,10 +51,12 @@ jIFormatReader  = @jimport "loci.formats.IFormatReader";
 jReaderWrapper = @jimport "loci.formats.ReaderWrapper";
 
 myChannelFiller     = jChannelFiller((),);
-#myIFormatReader	  = convert(jIFormatReader,myChannelFiller);
-myChannelSeparator  = jChannelSeparator((), );
+myIFormatReader	  = convert(jIFormatReader,myChannelFiller);
+#myChannelSeparator  = jChannelSeparator((), );
 #myChannelSeparator  = jChannelSeparator((jChannelFiller), myChannelFiller);
-#myChannelSeparator  = jChannelSeparator((jIFormatReader), myIFormatReader);
+
+
+myChannelSeparator  = jChannelSeparator((jIFormatReader), myIFormatReader);
 
 r=jcall(myChannelSeparator, "setId", (), (JString),"cou");
 

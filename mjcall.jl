@@ -1,6 +1,6 @@
-jMethod = @jimport "java.lang.reflect.Method";
 jClass = @jimport "java.lang.Class";
-
+jMethod = @jimport "java.lang.reflect.Method";
+jConstructor = @jimport "java.lang.reflect.Constructor";
 
 # Call static methods
 function mjcall{T}(typ::Type{JavaObject{T}}, method::String, rettype::Type, argtypes::Tuple, args... )
@@ -25,12 +25,8 @@ end
 
 
 function getMethod{T}(typ::Type{JavaObject{T}})
-#print("typ\n\n");
-#function getMethod(typ)
-	#myClass   = convert(jClass, typ);
 	obj = typ((),);
 	myClass   = jcall(obj, "getClass", (jClass), (),);
-	#myName    = jcall(myClass, "getName", (JString), (),);
 	myMethods = jcall(myClass, "getMethods", (Array{jMethod,1}), (),);
 	for i= 1:size(myMethods,1)	
 		s = jcall(myMethods[i], "toString", (JString), (),);
@@ -41,10 +37,7 @@ function getMethod{T}(typ::Type{JavaObject{T}})
 end
 
 function getMethod(obj::JavaObject)
-#print("obj\n\n");
-#function getMethod(obj)
 	myClass   = jcall(obj, "getClass", (jClass), (),);
-	#myName    = jcall(myClass, "getName", (JString), (),);
 	myMethods = jcall(myClass, "getMethods", (Array{jMethod,1}), (),);
 	for i= 1:size(myMethods,1)	
 		s = jcall(myMethods[i], "toString", (JString), (),);
@@ -53,4 +46,29 @@ function getMethod(obj::JavaObject)
 	end
 	print("\n");
 end
+
+
+function getConstructor{T}(typ::Type{JavaObject{T}})
+	obj = typ((),);
+	myClass   = jcall(obj, "getClass", (jClass), (),);
+	myConstructors = jcall(myClass, "getConstructors", (Array{jConstructor,1}), (),);
+	for i= 1:size(myConstructors,1)	
+		s = jcall(myConstructors[i], "toString", (JString), (),);
+		print(s);
+		print("\n");
+	end
+	print("\n");
+end
+
+function getConstructor(obj::JavaObject)
+	myClass   = jcall(obj, "getClass", (jClass), (),);
+		myConstructors = jcall(myClass, "getConstructors", (Array{jConstructor,1}), (),);
+	for i= 1:size(myConstructors,1)	
+		s = jcall(myConstructors[i], "toString", (JString), (),);
+		print(s);
+		print("\n");
+	end
+	print("\n");
+end
+
 
