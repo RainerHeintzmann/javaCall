@@ -39,6 +39,9 @@ function setindex!{N<:Integer}(a::Img{Array{Float64,N}}, x...)
 end
 #myArray= rand(64,64,3,2,2)  # this is the 5D-Array to display
 
+
+
+
 importall Base;
 #using Winston;
 using JavaCall;
@@ -55,11 +58,12 @@ myIFormatReader	  = convert(jIFormatReader,myChannelFiller);
 #myChannelSeparator  = jChannelSeparator((), );
 #myChannelSeparator  = jChannelSeparator((jChannelFiller), myChannelFiller);
 
+myChannelSeparator  = jChannelSeparator((jIFormatReader,), myIFormatReader);
 
-myChannelSeparator  = jChannelSeparator((jIFormatReader), myIFormatReader);
+getMethod(myChannelSeparator,"setId");
 
-r=jcall(myChannelSeparator, "setId", (), (JString),"cou");
-
+jcall(myChannelSeparator, "setId", Void, (JString,),"cou");
+jcall(myChannelSeparator, "setSeries",Void,(jint,),0);
 
 r=jcall(myChannelSeparator, "getIndex", (jint), (jint,jint,jint),1,2,3);
 

@@ -24,51 +24,58 @@ end
 
 
 
-function getMethod{T}(typ::Type{JavaObject{T}})
+function getMethod{T}(typ::Type{JavaObject{T}}, name::ASCIIString = "")
 	obj = typ((),);
 	myClass   = jcall(obj, "getClass", (jClass), (),);
 	myMethods = jcall(myClass, "getMethods", (Array{jMethod,1}), (),);
 	for i= 1:size(myMethods,1)	
 		s = jcall(myMethods[i], "toString", (JString), (),);
-		print(s);
-		print("\n");
+		if (name!="") && (match(Regex(name), s) != nothing)
+			print(s);
+			print("\n");
+		end
 	end
 	print("\n");
 end
 
-function getMethod(obj::JavaObject)
+function getMethod(obj::JavaObject, name::ASCIIString = "")
 	myClass   = jcall(obj, "getClass", (jClass), (),);
 	myMethods = jcall(myClass, "getMethods", (Array{jMethod,1}), (),);
 	for i= 1:size(myMethods,1)	
 		s = jcall(myMethods[i], "toString", (JString), (),);
-		print(s);
-		print("\n");
+		if (name!="") && (match(Regex(name), s) != nothing)
+			print(s);
+			print("\n");
+		end
 	end
 	print("\n");
 end
 
 
-function getConstructor{T}(typ::Type{JavaObject{T}})
+function getConstructor{T}(typ::Type{JavaObject{T}}, name::ASCIIString = "")
 	obj = typ((),);
 	myClass   = jcall(obj, "getClass", (jClass), (),);
 	myConstructors = jcall(myClass, "getConstructors", (Array{jConstructor,1}), (),);
 	for i= 1:size(myConstructors,1)	
 		s = jcall(myConstructors[i], "toString", (JString), (),);
-		print(s);
-		print("\n");
+		if (name!="") && (match(Regex(name), s) != nothing)
+			print(s);
+			print("\n");
+		end
 	end
 	print("\n");
 end
 
-function getConstructor(obj::JavaObject)
+function getConstructor(obj::JavaObject, name::ASCIIString = "")
 	myClass   = jcall(obj, "getClass", (jClass), (),);
 		myConstructors = jcall(myClass, "getConstructors", (Array{jConstructor,1}), (),);
 	for i= 1:size(myConstructors,1)	
 		s = jcall(myConstructors[i], "toString", (JString), (),);
-		print(s);
-		print("\n");
+		if (name!="") && (match(Regex(name), s) != nothing)
+			print(s);
+			print("\n");
+		end
 	end
 	print("\n");
 end
-
 
